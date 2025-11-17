@@ -308,7 +308,7 @@ This project is licensed under the MIT License.
 
 ## 👤 Author
 
-[Agasthya R Kumar](https://github.com/agasthyarkumar)
+[Pihul Waradkar](https://github.com/pihulwaradkar)
 
 ## 🙏 Acknowledgments
 
