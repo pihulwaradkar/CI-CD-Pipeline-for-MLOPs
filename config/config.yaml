@@ -1,0 +1,81 @@
+# Main Configuration File
+project:
+  name: "house-price-prediction"
+  version: "0.1.0"
+  author: "Agasthya R Kumar"
+
+data:
+  raw_data_path: "data/raw/housing.csv"
+  processed_data_path: "data/processed/housing_processed.parquet"
+  feature_store_path: "data/feature_store"
+  test_size: 0.2
+  random_state: 42
+  
+  # Data source
+  kaggle_dataset: "camnugent/california-housing-prices"  # Alternative dataset
+  download_url: "https://raw.githubusercontent.com/ageron/handson-ml/master/datasets/housing/housing.csv"
+
+model:
+  type: "random_forest"  # Options: random_forest, gradient_boosting, linear_regression, xgboost, neural_network
+  target_column: "median_house_value"
+  
+  # Feature engineering
+  features:
+    numerical:
+      - "longitude"
+      - "latitude"
+      - "housing_median_age"
+      - "total_rooms"
+      - "total_bedrooms"
+      - "population"
+      - "households"
+      - "median_income"
+    categorical:
+      - "ocean_proximity"
+    
+  # Feature scaling
+  scaling:
+    method: "standard"  # Options: standard, minmax, robust
+
+mlflow:
+  tracking_uri: "./mlflow"
+  experiment_name: "house-price-prediction"
+  run_name_prefix: "run"
+  
+  # Artifacts to log
+  log_artifacts:
+    - "model"
+    - "preprocessor"
+    - "feature_importance"
+    - "plots"
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  title: "House Price Prediction API"
+  version: "1.0.0"
+  description: "MLflow-powered house price prediction service"
+
+monitoring:
+  drift_detection:
+    enabled: true
+    reference_data_path: "data/processed/reference_data.parquet"
+    threshold: 0.05
+  
+  performance_monitoring:
+    enabled: true
+    metrics:
+      - "mae"
+      - "rmse"
+      - "r2"
+      - "mape"
+
+docker:
+  image_name: "house-price-api"
+  tag: "latest"
+  port: 8000
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/app.log"
